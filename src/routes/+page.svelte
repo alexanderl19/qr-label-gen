@@ -1,11 +1,12 @@
 <script lang="ts">
-	import QR from '@svelte-put/qr/svg/QR.svelte';
 	import { nanoid } from 'nanoid';
-	import Config, { type Items } from './Config.svelte';
+	import Config, { type ItemsType } from './Config.svelte';
+	import Preview from './Preview.svelte';
 
 	let rowCol = $state<'row' | 'col'>('row');
+	let qrSize = $state(2);
 
-	const defaultState = [
+	const defaultState: ItemsType = [
 		{ _type: 'spacer' as const, id: nanoid(), weight: 1 },
 		{
 			_type: 'nested' as const,
@@ -16,7 +17,8 @@
 				{ _type: 'spacer' as const, id: nanoid(), weight: 1 },
 				{ _type: 'qr' as const, id: nanoid() },
 				{ _type: 'spacer' as const, id: nanoid(), weight: 1 }
-			]
+			],
+			size: 2.5
 		},
 		{ _type: 'spacer' as const, id: nanoid(), weight: 1 },
 		{
@@ -28,17 +30,28 @@
 				{ _type: 'spacer' as const, id: nanoid(), weight: 1 },
 				{ _type: 'qr' as const, id: nanoid() },
 				{ _type: 'spacer' as const, id: nanoid(), weight: 1 }
-			]
+			],
+			size: 2.5
 		},
 		{ _type: 'spacer' as const, id: nanoid(), weight: 1 }
 	];
-	let rows = $state<Items>(defaultState);
-	let cols = $state<Items>(defaultState);
+	let rows = $state<ItemsType>(defaultState);
+	let columns = $state<ItemsType>(defaultState);
 
 	$inspect(rows);
 </script>
 
 <div class="configure">
+	<label class="paper-size">
+		Paper Size
+		<select>
+			<option value="letter">Letter (8.5 x 11in)</option>
+		</select>
+	</label>
+	<label class="paper-size">
+		QR Size
+		<input type="number" name="qr-size" bind:value={qrSize} />
+	</label>
 	<form class="row-col-selector">
 		<label>
 			Rows
@@ -70,37 +83,27 @@
 		{#if rowCol === 'row'}
 			<Config bind:items={rows} />
 		{:else}
-			<Config bind:items={cols} />
+			<Config bind:items={columns} />
 		{/if}
 	</div>
 </div>
 
-<!-- Columns -->
-
-<!-- <div class="rows">
-	{#each rowsParsed as row}
-		{#if row === ' '}
-			<div class="columns">
-				{#each columnsParsed as column}
-					{#if column === 'qr'}
-						<QR
-							data="https://svelte-put.vnphanquang.com/docs/qr"
-							moduleFill="violet"
-							anchorOuterFill="red"
-							anchorInnerFill="violet"
-						/>
-					{:else if typeof column === 'number'}
-						<div style:flex-weight={column}></div>
-					{/if}
-				{/each}
-			</div>
-		{:else if typeof row === 'number'}
-			<div style:flex-weight={row}></div>
-		{/if}
-	{/each}
-</div> -->
+<Preview {rows} {columns} {qrSize} />
 
 <style lang="scss">
+	.configure {
+		margin: 24px 0;
+	}
+
+	.paper-size {
+		position: sticky;
+		left: 8px;
+		display: flex;
+		width: max-content;
+		align-items: baseline;
+		gap: 12px;
+	}
+
 	.row-col-selector {
 		padding: 8px 0;
 		position: sticky;
@@ -114,10 +117,6 @@
 			display: flex;
 			gap: 3px;
 		}
-	}
-
-	.configure {
-		margin: 24px 0;
 	}
 
 	.content {

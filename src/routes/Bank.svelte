@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { flip } from 'svelte/animate';
-	import { type ItemType, type Items } from './Config.svelte';
+	import { type ItemType, type ItemsType } from './Config.svelte';
 
 	import {
 		dndzone,
@@ -19,7 +19,7 @@
 
 	let { includeNested = false, type }: Props = $props();
 
-	let items = $state<Items>([
+	let items = $state<ItemsType>([
 		{ _type: 'spacer' as const, id: nanoid(), weight: 1 },
 		{ _type: 'qr' as const, id: nanoid() },
 		...(includeNested
