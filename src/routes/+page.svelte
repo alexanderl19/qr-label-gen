@@ -3,7 +3,7 @@
 	import Config, { type ItemsType } from './Config.svelte';
 	import Preview from './Preview.svelte';
 	import { ssp, queryParameters } from 'sveltekit-search-params';
-	import { codes } from './Columns.svelte';
+	import { codes } from './RandomQR.svelte';
 	import { format } from 'date-fns';
 	import { UTCDate } from '@date-fns/utc';
 

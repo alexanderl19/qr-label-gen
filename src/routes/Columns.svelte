@@ -1,12 +1,7 @@
-<script lang="ts" module>
-	export let codes = $state<string[]>([]);
-</script>
-
 <script lang="ts">
 	import type { ItemsType } from './Config.svelte';
 	import Columns from './Columns.svelte';
-	import QR from '@svelte-put/qr/svg/QR.svelte';
-	import { customAlphabet } from 'nanoid';
+	import RandomQr from './RandomQR.svelte';
 
 	interface Props {
 		columns: ItemsType;
@@ -16,10 +11,6 @@
 	}
 
 	let { columns, qrSize, parentWidth, baseUrl }: Props = $props();
-
-	const genId = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 10);
-	const code = genId();
-	codes.push(code);
 </script>
 
 <div class="cols">
@@ -29,9 +20,7 @@
 				<Columns columns={column.items} {qrSize} parentWidth={column.size} {baseUrl} />
 			</div>
 		{:else if column._type === 'qr'}
-			<div style:width="{(qrSize / parentWidth) * 100}%">
-				<QR data="{baseUrl}{code}" errorCorrectionLevel="L" />
-			</div>
+			<RandomQr {qrSize} {parentWidth} {baseUrl} />
 		{:else if column._type === 'spacer'}
 			<div style:flex-grow={column.weight}></div>
 		{/if}
