@@ -3,6 +3,7 @@
 	import Config, { type ItemsType } from './Config.svelte';
 	import Preview from './Preview.svelte';
 	import { ssp, queryParameters } from 'sveltekit-search-params';
+	import { codes } from './Columns.svelte';
 
 	let rowCol = $state<'row' | 'col'>('row');
 
@@ -38,11 +39,13 @@
 	const params = queryParameters({
 		qrSize: ssp.number(1),
 		rows: ssp.lz(defaultState),
-		columns: ssp.lz(defaultState)
+		columns: ssp.lz(defaultState),
+		baseUrl: ssp.string('https://assets.alexanderliu.com/qr/')
 	});
 	let rows = $state<ItemsType>($params.rows);
 	let columns = $state<ItemsType>($params.columns);
 	let qrSize = $state($params.qrSize);
+	let baseUrl = $state($params.baseUrl);
 	$effect(() => {
 		$params.rows = $state.snapshot(rows);
 	});
@@ -52,11 +55,19 @@
 	$effect(() => {
 		$params.qrSize = $state.snapshot(qrSize);
 	});
+	$effect(() => {
+		$params.baseUrl = $state.snapshot(baseUrl);
+	});
 
 	$inspect(rows);
 </script>
 
 <div class="configure">
+	<input type="text" id="codes" readonly value={codes.join(',')} />
+	<label class="base-url">
+		Base URL
+		<input type="string" name="base-url" bind:value={baseUrl} />
+	</label>
 	<label class="paper-size">
 		Paper Size
 		<select>
@@ -103,7 +114,7 @@
 	</div>
 </div>
 
-<Preview {rows} {columns} {qrSize} />
+<Preview {rows} {columns} {qrSize} {baseUrl} />
 
 <style lang="scss">
 	.configure {
@@ -114,7 +125,8 @@
 		}
 	}
 
-	.paper-size {
+	.paper-size,
+	.base-url {
 		position: sticky;
 		left: 8px;
 		display: flex;

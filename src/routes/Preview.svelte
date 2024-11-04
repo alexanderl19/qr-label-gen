@@ -6,13 +6,14 @@
 		rows: ItemsType;
 		columns: ItemsType;
 		qrSize: number;
+		baseUrl: string;
 	}
 
-	let { rows, columns, qrSize }: Props = $props();
+	let { rows, columns, qrSize, baseUrl }: Props = $props();
 </script>
 
 <div class="page">
-	<Row {rows} {columns} {qrSize} parentWidth={8.5} parentHeight={11} />
+	<Row {rows} {columns} {qrSize} parentWidth={8.5} parentHeight={11} {baseUrl} />
 </div>
 
 <style lang="scss">

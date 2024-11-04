@@ -9,20 +9,21 @@
 		qrSize: number;
 		parentWidth: number;
 		parentHeight: number;
+		baseUrl: string;
 	}
 
-	let { rows, columns, qrSize, parentWidth, parentHeight }: Props = $props();
+	let { rows, columns, qrSize, parentWidth, parentHeight, baseUrl }: Props = $props();
 </script>
 
 <div class="rows">
 	{#each rows as row}
 		{#if row._type === 'nested'}
 			<div style:height="{(row.size / parentHeight) * 100}%">
-				<Row rows={row.items} {columns} {qrSize} {parentWidth} parentHeight={row.size} />
+				<Row rows={row.items} {columns} {qrSize} {parentWidth} parentHeight={row.size} {baseUrl} />
 			</div>
 		{:else if row._type === 'qr'}
 			<div style:height="{(qrSize / parentHeight) * 100}%">
-				<Columns {columns} {qrSize} parentWidth={8.5} />
+				<Columns {columns} {qrSize} parentWidth={8.5} {baseUrl} />
 			</div>
 		{:else if row._type === 'spacer'}
 			<div style:flex-grow={row.weight}></div>
