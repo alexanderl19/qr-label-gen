@@ -2,9 +2,9 @@
 	import { nanoid } from 'nanoid';
 	import Config, { type ItemsType } from './Config.svelte';
 	import Preview from './Preview.svelte';
+	import { ssp, queryParameters } from 'sveltekit-search-params';
 
 	let rowCol = $state<'row' | 'col'>('row');
-	let qrSize = $state(2);
 
 	const defaultState: ItemsType = [
 		{ _type: 'spacer' as const, id: nanoid(), weight: 1 },
@@ -35,8 +35,23 @@
 		},
 		{ _type: 'spacer' as const, id: nanoid(), weight: 1 }
 	];
-	let rows = $state<ItemsType>(defaultState);
-	let columns = $state<ItemsType>(defaultState);
+	const params = queryParameters({
+		qrSize: ssp.number(1),
+		rows: ssp.lz(defaultState),
+		columns: ssp.lz(defaultState)
+	});
+	let rows = $state<ItemsType>($params.rows);
+	let columns = $state<ItemsType>($params.columns);
+	let qrSize = $state($params.qrSize);
+	$effect(() => {
+		$params.rows = $state.snapshot(rows);
+	});
+	$effect(() => {
+		$params.columns = $state.snapshot(columns);
+	});
+	$effect(() => {
+		$params.qrSize = $state.snapshot(qrSize);
+	});
 
 	$inspect(rows);
 </script>

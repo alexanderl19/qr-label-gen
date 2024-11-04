@@ -27,7 +27,8 @@
 					{
 						_type: 'nested' as const,
 						id: nanoid(),
-						items: []
+						items: [],
+						size: 2.5
 					}
 				]
 			: [])

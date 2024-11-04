@@ -47,6 +47,7 @@
 			const idx = items.findIndex((i) => i.id === id);
 			items.splice(idx, 1);
 		}
+		items = [...items];
 	};
 
 	const flipDurationMs = 200;
@@ -57,9 +58,11 @@
 	use:dragHandleZone={{ items, flipDurationMs, centreDraggedOnCursor: true, dropTargetStyle: {} }}
 	onconsider={(e) => {
 		items = e.detail.items;
+		items = [...items];
 	}}
 	onfinalize={(e) => {
 		items = e.detail.items;
+		items = [...items];
 	}}
 >
 	{#each items as item, i (item.id)}
@@ -73,7 +76,12 @@
 					{#snippet actions()}
 						<div class="group-actions">
 							<Bank type={item.id} />
-							<Copy oncopy={() => items.splice(i + 1, 0, { ...items[i], id: nanoid() })} />
+							<Copy
+								oncopy={() => {
+									items.splice(i + 1, 0, { ...items[i], id: nanoid() });
+									items = [...items];
+								}}
+							/>
 							<Delete ondelete={() => deleteById(item.id)} />
 						</div>
 					{/snippet}
@@ -89,10 +97,12 @@
 							onconsider={(e) => {
 								const id = items.findIndex((c) => c.id === item.id);
 								(items[id] as NestedItem).items = e.detail.items;
+								items = [...items];
 							}}
 							onfinalize={(e) => {
 								const id = items.findIndex((c) => c.id === item.id);
 								(items[id] as NestedItem).items = e.detail.items;
+								items = [...items];
 							}}
 						>
 							{#each item.items as subitem (subitem.id)}
