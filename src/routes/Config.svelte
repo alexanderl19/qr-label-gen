@@ -117,6 +117,7 @@
 	.config {
 		display: flex;
 		gap: 12px;
+		width: max-content;
 	}
 
 	.nested {

@@ -11,7 +11,7 @@
 	let { ondelete, weight = $bindable(), borderRadius }: Props = $props();
 </script>
 
-<Item name="Spacer" {borderRadius}>
+<Item name="Spacer" {borderRadius} width="140px">
 	{#snippet actions()}
 		<Delete ondelete={() => ondelete()} />
 	{/snippet}

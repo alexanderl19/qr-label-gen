@@ -11,7 +11,7 @@
 	let { ondelete, borderRadius }: Props = $props();
 </script>
 
-<Item name="QR" {borderRadius}>
+<Item name="QR" {borderRadius} width="140px">
 	{#snippet actions()}
 		<Delete ondelete={() => ondelete()} />
 	{/snippet}

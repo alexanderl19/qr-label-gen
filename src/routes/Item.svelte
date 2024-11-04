@@ -8,12 +8,13 @@
 		actions?: Snippet;
 		name: string;
 		borderRadius?: number;
+		width?: string;
 	}
 
-	let { children, actions, name, borderRadius = 4 }: Props = $props();
+	let { children, actions, name, borderRadius = 4, width = 'max-content' }: Props = $props();
 </script>
 
-<div class="item" style:--item-border-radius="{borderRadius}px">
+<div class="item" style:--item-border-radius="{borderRadius}px" style:width>
 	<div class="content">
 		{#if children}
 			{@render children()}
@@ -36,7 +37,6 @@
 <style lang="scss">
 	.item {
 		flex-grow: 1;
-		min-width: 90px;
 		height: 100%;
 		box-sizing: border-box;
 		display: flex;
