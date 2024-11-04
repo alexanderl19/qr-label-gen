@@ -65,17 +65,17 @@
 	<div class="from-to">
 		<div class="from">
 			{#if rowCol === 'row'}
-				Left
-			{:else}
 				Top
+			{:else}
+				Left
 			{/if}
 		</div>
 		<div class="line"></div>
 		<div class="to">
 			{#if rowCol === 'row'}
-				Right
-			{:else}
 				Bottom
+			{:else}
+				Right
 			{/if}
 		</div>
 	</div>
