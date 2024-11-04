@@ -4,6 +4,8 @@
 	import Preview from './Preview.svelte';
 	import { ssp, queryParameters } from 'sveltekit-search-params';
 	import { codes } from './Columns.svelte';
+	import { format } from 'date-fns';
+	import { UTCDate } from '@date-fns/utc';
 
 	let rowCol = $state<'row' | 'col'>('row');
 
@@ -60,10 +62,17 @@
 	});
 
 	$inspect(rows);
+
+	let codesPreview = $derived.by(() => {
+		return (
+			'id,version,errorCorrection,updatedAt\n' +
+			codes.map((id) => id + ',0,H,' + format(new UTCDate(), 'yyyy-MM-dd HH:mm:ss')).join('\n')
+		);
+	});
 </script>
 
 <div class="configure">
-	<input type="text" id="codes" readonly value={codes.join(',')} />
+	<textarea id="codes" readonly value={codesPreview}></textarea>
 	<label class="base-url">
 		Base URL
 		<input type="string" name="base-url" bind:value={baseUrl} />
