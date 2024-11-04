@@ -1,15 +1,20 @@
 <script lang="ts">
+	import Delete from './Delete.svelte';
 	import Item from './Item.svelte';
 
 	interface Props {
+		ondelete: () => void;
 		weight: number;
 		borderRadius?: number;
 	}
 
-	let { weight = $bindable(), borderRadius }: Props = $props();
+	let { ondelete, weight = $bindable(), borderRadius }: Props = $props();
 </script>
 
 <Item name="Spacer" {borderRadius}>
+	{#snippet actions()}
+		<Delete ondelete={() => ondelete()} />
+	{/snippet}
 	<input class="spacer-weight" type="number" min="1" bind:value={weight} />
 </Item>
 

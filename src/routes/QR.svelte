@@ -1,15 +1,20 @@
 <script lang="ts">
+	import Delete from './Delete.svelte';
 	import Item from './Item.svelte';
 	import { QrCode } from 'lucide-svelte';
 
 	interface Props {
+		ondelete: () => void;
 		borderRadius?: number;
 	}
 
-	let { borderRadius }: Props = $props();
+	let { ondelete, borderRadius }: Props = $props();
 </script>
 
 <Item name="QR" {borderRadius}>
+	{#snippet actions()}
+		<Delete ondelete={() => ondelete()} />
+	{/snippet}
 	<div class="qr">
 		<QrCode size={20} />
 	</div>

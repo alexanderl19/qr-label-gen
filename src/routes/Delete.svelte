@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { Space, QrCode, Group } from 'lucide-svelte';
+	import { Trash2 } from 'lucide-svelte';
 
 	interface Props {
-		type: 'spacer' | 'qr' | 'nested';
+		ondelete: () => void;
 	}
 
-	let { type }: Props = $props();
-
-
+	let { ondelete }: Props = $props();
 </script>
 
-<button class="delete" onclick={}> </button>
+<button class="delete" onclick={() => ondelete()}>
+	<Trash2 size={14} />
+</button>
 
 <style lang="scss">
 	.delete {
@@ -20,8 +20,14 @@
 		justify-content: center;
 		height: 22px;
 		width: 32px;
-		background: #fff;
-		border: 1px dashed #d9d9d9;
+		background: #feebec;
+		border: 1px solid #fdbdbe;
 		border-radius: 1000px;
+		cursor: default;
+
+		&:hover {
+			border: 1px solid #f4a9aa;
+			background: #ffdbdc;
+		}
 	}
 </style>

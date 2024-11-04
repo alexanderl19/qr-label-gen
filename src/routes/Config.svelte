@@ -26,12 +26,25 @@
 	import Qr from './QR.svelte';
 
 	import Bank from './Bank.svelte';
+	import Delete from './Delete.svelte';
 
 	interface Props {
 		items: Items;
 	}
 
 	let { items = $bindable() }: Props = $props();
+
+	const deleteById = (id: string, nestedId?: string) => {
+		if (nestedId) {
+			const nestedIdx = items.findIndex((i) => i.id === nestedId && i._type === 'nested');
+			const nestedItem = items[nestedIdx] as NestedItem;
+			const idx = nestedItem.items.findIndex((i) => i.id === id);
+			(items[nestedIdx] as NestedItem).items.splice(idx, 1);
+		} else {
+			const idx = items.findIndex((i) => i.id === id);
+			items.splice(idx, 1);
+		}
+	};
 
 	const flipDurationMs = 200;
 </script>
@@ -49,13 +62,16 @@
 	{#each items as item (item.id)}
 		<div animate:flip={{ duration: flipDurationMs }}>
 			{#if item._type === 'spacer'}
-				<Spacer bind:weight={item.weight} />
+				<Spacer bind:weight={item.weight} ondelete={() => deleteById(item.id)} />
 			{:else if item._type === 'qr'}
-				<Qr />
+				<Qr ondelete={() => deleteById(item.id)} />
 			{:else if item._type === 'nested'}
 				<Item name="Group">
 					{#snippet actions()}
-						<Bank type={item.id} />
+						<div class="group-actions">
+							<Bank type={item.id} />
+							<Delete ondelete={() => deleteById(item.id)} />
+						</div>
 					{/snippet}
 					<div
 						class="nested"
@@ -77,9 +93,13 @@
 						{#each item.items as subitem (subitem.id)}
 							<div class="card" animate:flip={{ duration: flipDurationMs }}>
 								{#if subitem._type === 'spacer'}
-									<Spacer bind:weight={subitem.weight} borderRadius={2} />
+									<Spacer
+										bind:weight={subitem.weight}
+										borderRadius={2}
+										ondelete={() => deleteById(subitem.id, item.id)}
+									/>
 								{:else if subitem._type === 'qr'}
-									<Qr borderRadius={2} />
+									<Qr borderRadius={2} ondelete={() => deleteById(subitem.id, item.id)} />
 								{/if}
 							</div>
 						{/each}
@@ -105,6 +125,11 @@
 		padding: 2px;
 		box-sizing: border-box;
 		height: 100%;
+	}
+
+	.group-actions {
+		display: flex;
+		gap: 2px;
 	}
 
 	.add {
