@@ -108,6 +108,10 @@
 <style lang="scss">
 	.configure {
 		margin: 24px 0;
+
+		@media print {
+			display: none;
+		}
 	}
 
 	.paper-size {

@@ -9,12 +9,10 @@
 	}
 
 	let { rows, columns, qrSize }: Props = $props();
-
-	const width = 600;
 </script>
 
 <div class="page">
-	<Row {rows} {columns} {qrSize} {width} />
+	<Row {rows} {columns} {qrSize} parentWidth={8.5} parentHeight={11} />
 </div>
 
 <style lang="scss">
@@ -23,5 +21,21 @@
 		width: 600px;
 		background-color: #fcfcfc;
 		overflow: hidden;
+
+		@media print {
+			background-color: transparent;
+			width: 100%;
+		}
+	}
+
+	@media print {
+		:global(body) {
+			margin: 0;
+		}
+	}
+
+	@page {
+		size: 8.5in 11in;
+		margin: 0;
 	}
 </style>

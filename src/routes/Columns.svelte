@@ -6,20 +6,20 @@
 	interface Props {
 		columns: ItemsType;
 		qrSize: number;
-		width: number;
+		parentWidth: number;
 	}
 
-	let { columns, qrSize, width }: Props = $props();
+	let { columns, qrSize, parentWidth }: Props = $props();
 </script>
 
 <div class="cols">
 	{#each columns as column}
 		{#if column._type === 'nested'}
-			<div style:width="{(column.size / 8.5) * width}px">
-				<Columns columns={column.items} {qrSize} {width} />
+			<div style:width="{(column.size / parentWidth) * 100}%">
+				<Columns columns={column.items} {qrSize} parentWidth={column.size} />
 			</div>
 		{:else if column._type === 'qr'}
-			<div style:width="{(qrSize / 8.5) * width}px">
+			<div style:width="{(qrSize / parentWidth) * 100}%">
 				<QR data="https://svelte-put.vnphanquang.com/docs/qr" />
 			</div>
 		{:else if column._type === 'spacer'}
