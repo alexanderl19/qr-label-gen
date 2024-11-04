@@ -28,6 +28,8 @@
 
 	import Bank from './Bank.svelte';
 	import Delete from './Delete.svelte';
+	import Copy from './Copy.svelte';
+	import { nanoid } from 'nanoid';
 
 	interface Props {
 		items: ItemsType;
@@ -60,7 +62,7 @@
 		items = e.detail.items;
 	}}
 >
-	{#each items as item (item.id)}
+	{#each items as item, i (item.id)}
 		<div animate:flip={{ duration: flipDurationMs }}>
 			{#if item._type === 'spacer'}
 				<Spacer bind:weight={item.weight} ondelete={() => deleteById(item.id)} />
@@ -71,6 +73,7 @@
 					{#snippet actions()}
 						<div class="group-actions">
 							<Bank type={item.id} />
+							<Copy oncopy={() => items.splice(i + 1, 0, { ...items[i], id: nanoid() })} />
 							<Delete ondelete={() => deleteById(item.id)} />
 						</div>
 					{/snippet}
