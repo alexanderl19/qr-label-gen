@@ -11,9 +11,6 @@ importers:
       '@date-fns/utc':
         specifier: 2.1.0
         version: 2.1.0
-      '@svelte-put/qr':
-        specifier: 2.0.0
-        version: 2.0.0(svelte@5.1.9)
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
         version: 3.3.1(@sveltejs/kit@2.7.4(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.9)(vite@5.4.10(sass-embedded@1.80.6)(sass@1.80.6)))(svelte@5.1.9)(vite@5.4.10(sass-embedded@1.80.6)(sass@1.80.6)))
@@ -53,6 +50,9 @@ importers:
       prettier-plugin-svelte:
         specifier: ^3.2.6
         version: 3.2.7(prettier@3.3.3)(svelte@5.1.9)
+      qrcode-generator:
+        specifier: 1.4.4
+        version: 1.4.4
       sass-embedded:
         specifier: 1.80.6
         version: 1.80.6
@@ -480,11 +480,6 @@ packages:
     resolution: {integrity: sha512-HGZgRFFYrMrP3TJlq58nR1xy8zHKId25vhmm5S9jETEfDf6xybPxsavFTJaufe2zgOGYJBskGlj49CwtEuFhWQ==}
     cpu: [x64]
     os: [win32]
-
-  '@svelte-put/qr@2.0.0':
-    resolution: {integrity: sha512-gVsLJq1tNbSAMuOzaKU9Cuut2dgUvBzhT1BHzLwjOQqUjynwVe9oAIg6wrbKX+jA01gQs+6b8237WDofBBXIYg==}
-    peerDependencies:
-      svelte: ^5.1.0
 
   '@sveltejs/adapter-auto@3.3.1':
     resolution: {integrity: sha512-5Sc7WAxYdL6q9j/+D0jJKjGREGlfIevDyHSQ2eNETHcB1TKlQWHcAo8AS8H1QdjNvSXpvOwNjykDUHPEAyGgdQ==}
@@ -1713,11 +1708,6 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.24.3':
     optional: true
-
-  '@svelte-put/qr@2.0.0(svelte@5.1.9)':
-    dependencies:
-      qrcode-generator: 1.4.4
-      svelte: 5.1.9
 
   '@sveltejs/adapter-auto@3.3.1(@sveltejs/kit@2.7.4(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.9)(vite@5.4.10(sass-embedded@1.80.6)(sass@1.80.6)))(svelte@5.1.9)(vite@5.4.10(sass-embedded@1.80.6)(sass@1.80.6)))':
     dependencies:

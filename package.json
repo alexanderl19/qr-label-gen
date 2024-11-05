@@ -13,7 +13,6 @@
 	},
 	"devDependencies": {
 		"@date-fns/utc": "2.1.0",
-		"@svelte-put/qr": "2.0.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
@@ -27,6 +26,7 @@
 		"nanoid": "5.0.8",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
+		"qrcode-generator": "1.4.4",
 		"sass-embedded": "1.80.6",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",

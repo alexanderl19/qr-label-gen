@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-	import QR from '@svelte-put/qr/svg/QR.svelte';
 	import { customAlphabet } from 'nanoid';
+	import qrcode from 'qrcode-generator';
 
 	interface Props {
 		qrSize: number;
@@ -18,8 +18,18 @@
 
 	const code = nanoid();
 	codes.push(code);
+
+	const qr = qrcode(0, 'Q');
+	qr.addData(`${baseUrl}${code}`);
+	qr.make();
+
+	const svg = qr.createSvgTag({
+		cellSize: 1,
+		margin: 4,
+		scalable: true
+	});
 </script>
 
-<div style:width="{(qrSize / parentWidth) * 100}%" data-id={code}>
-	<QR data="{baseUrl}{code}" errorCorrectionLevel="L" />
+<div style:width="{(qrSize / parentWidth) * 100}%" data-url="{baseUrl}{code}">
+	{@html svg}
 </div>
