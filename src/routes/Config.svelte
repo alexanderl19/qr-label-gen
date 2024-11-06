@@ -13,6 +13,7 @@
 		id: string;
 		items: (SpacerItem | QRItem)[];
 		size: number;
+		syncQr?: boolean;
 	};
 
 	export type ItemType = SpacerItem | QRItem | NestedItem;
@@ -78,7 +79,12 @@
 							<Bank type={item.id} />
 							<Copy
 								oncopy={() => {
-									items.splice(i + 1, 0, { ...items[i], id: nanoid() });
+									const itemToCopy = items[i] as NestedItem;
+									items.splice(i + 1, 0, {
+										...itemToCopy,
+										id: nanoid(),
+										items: itemToCopy.items.map((item) => ({ ...item, id: nanoid() }))
+									});
 									items = [...items];
 								}}
 							/>
@@ -119,7 +125,10 @@
 								</div>
 							{/each}
 						</div>
-						<input class="nested-size" type="number" min="1" bind:value={item.size} />
+						<div class="nested-options">
+							<input type="checkbox" bind:checked={item.syncQr} />
+							<input class="nested-size" type="number" min="1" bind:value={item.size} />
+						</div>
 					</div>
 				</Item>
 			{/if}
@@ -145,14 +154,19 @@
 		height: 100%;
 	}
 
-	.nested-size {
-		width: 100%;
-		height: 100%;
-		box-sizing: border-box;
-		border: none;
-		text-align: center;
-		font-size: 1rem;
-		padding: 8px;
+	.nested-options {
+		display: flex;
+		gap: 4px;
+
+		.nested-size {
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			border: none;
+			text-align: center;
+			font-size: 1rem;
+			padding: 8px;
+		}
 	}
 
 	.group-actions {

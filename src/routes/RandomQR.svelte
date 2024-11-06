@@ -10,9 +10,11 @@
 		qrSize: number;
 		parentWidth: number;
 		baseUrl: string;
+		rowNumber: number;
+		columnNumber: number;
 	}
 
-	let { qrSize, parentWidth, baseUrl }: Props = $props();
+	let { qrSize, parentWidth, baseUrl, rowNumber, columnNumber }: Props = $props();
 
 	const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 10);
 
@@ -30,6 +32,11 @@
 	});
 </script>
 
-<div style:width="{(qrSize / parentWidth) * 100}%" data-url="{baseUrl}{code}">
+<div
+	style:width="{(qrSize / parentWidth) * 100}%"
+	data-url="{baseUrl}{code}"
+	data-row={rowNumber}
+	data-column={columnNumber}
+>
 	{@html svg}
 </div>

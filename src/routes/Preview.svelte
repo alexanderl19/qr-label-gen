@@ -10,10 +10,54 @@
 	}
 
 	let { rows, columns, qrSize, baseUrl }: Props = $props();
+
+	const itemsToQrMap = (items: ItemsType) =>
+		Object.fromEntries(
+			items
+				.filter((item) => item._type === 'qr' || item._type === 'nested')
+				.reduce(
+					(acc, current) => {
+						const previousIndex = acc.at(-1)?.[1] ?? -1;
+
+						if (current._type === 'qr') {
+							acc.push([current.id, previousIndex + 1]);
+						} else if (current._type === 'nested') {
+							const qrItems = current.items.filter((item) => item._type === 'qr');
+							if (current.syncQr === true) {
+								qrItems.forEach((item) => {
+									acc.push([item.id, previousIndex + 1]);
+								});
+							} else {
+								qrItems.forEach((item, i) => {
+									acc.push([item.id, previousIndex + 1 + i]);
+								});
+							}
+						}
+
+						return acc;
+					},
+					[] as [string, number][]
+				)
+		);
+
+	const qrRowMap = $derived(itemsToQrMap(rows));
+	const qrColumnMap = $derived(itemsToQrMap(columns));
+
+	$inspect(qrRowMap);
+	$inspect(qrColumnMap);
 </script>
 
 <div class="page">
-	<Row {rows} {columns} {qrSize} parentWidth={8.5} parentHeight={11} {baseUrl} />
+	<Row
+		{rows}
+		{columns}
+		{qrSize}
+		parentWidth={8.5}
+		parentHeight={11}
+		{baseUrl}
+		qrRows={qrRowMap}
+		qrColumns={qrColumnMap}
+	/>
 </div>
 
 <style lang="scss">
