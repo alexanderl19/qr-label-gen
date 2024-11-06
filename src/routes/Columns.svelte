@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ItemsType } from './Config.svelte';
 	import Columns from './Columns.svelte';
-	import RandomQr from './RandomQR.svelte';
+	import RenderQr from './RenderQR.svelte';
 
 	interface Props {
 		columns: ItemsType;
@@ -10,9 +10,11 @@
 		baseUrl: string;
 		rowNumber: number;
 		qrColumns: Record<string, number>;
+		ids: string[];
+		width: number;
 	}
 
-	let { columns, qrSize, parentWidth, baseUrl, rowNumber, qrColumns }: Props = $props();
+	let { columns, qrSize, parentWidth, baseUrl, rowNumber, qrColumns, ids, width }: Props = $props();
 </script>
 
 <div class="cols">
@@ -26,11 +28,20 @@
 					{baseUrl}
 					{rowNumber}
 					{qrColumns}
+					{ids}
+					{width}
 				/>
 			</div>
 		{:else if column._type === 'qr'}
 			{@const columnNumber = qrColumns[column.id]}
-			<RandomQr {qrSize} {parentWidth} {baseUrl} {rowNumber} {columnNumber} />
+			<RenderQr
+				{qrSize}
+				{parentWidth}
+				{baseUrl}
+				{rowNumber}
+				{columnNumber}
+				code={ids[rowNumber * width + columnNumber]}
+			/>
 		{:else if column._type === 'spacer'}
 			<div style:flex-grow={column.weight}></div>
 		{/if}

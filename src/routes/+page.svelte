@@ -3,7 +3,6 @@
 	import Config, { type ItemsType } from './Config.svelte';
 	import Preview from './Preview.svelte';
 	import { ssp, queryParameters } from 'sveltekit-search-params';
-	import { codes } from './RandomQR.svelte';
 	import { format } from 'date-fns';
 	import { UTCDate } from '@date-fns/utc';
 
@@ -62,6 +61,8 @@
 	});
 
 	$inspect(rows);
+
+	let codes = $state<string[]>([]);
 
 	let codesPreview = $derived.by(() => {
 		return (
@@ -123,7 +124,7 @@
 	</div>
 </div>
 
-<Preview {rows} {columns} {qrSize} {baseUrl} />
+<Preview {rows} {columns} {qrSize} {baseUrl} bind:codes />
 
 <style lang="scss">
 	.configure {

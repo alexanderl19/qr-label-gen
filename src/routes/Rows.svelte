@@ -12,10 +12,22 @@
 		baseUrl: string;
 		qrRows: Record<string, number>;
 		qrColumns: Record<string, number>;
+		ids: string[];
+		width: number;
 	}
 
-	let { rows, columns, qrSize, parentWidth, parentHeight, baseUrl, qrRows, qrColumns }: Props =
-		$props();
+	let {
+		rows,
+		columns,
+		qrSize,
+		parentWidth,
+		parentHeight,
+		baseUrl,
+		qrRows,
+		qrColumns,
+		ids,
+		width
+	}: Props = $props();
 </script>
 
 <div class="rows">
@@ -31,12 +43,23 @@
 					{baseUrl}
 					{qrRows}
 					{qrColumns}
+					{ids}
+					{width}
 				/>
 			</div>
 		{:else if row._type === 'qr'}
 			{@const rowNumber = qrRows[row.id]}
 			<div style:height="{(qrSize / parentHeight) * 100}%" data-row={rowNumber}>
-				<Columns {columns} {qrSize} parentWidth={8.5} {baseUrl} {rowNumber} {qrColumns} />
+				<Columns
+					{columns}
+					{qrSize}
+					parentWidth={8.5}
+					{baseUrl}
+					{rowNumber}
+					{qrColumns}
+					{ids}
+					{width}
+				/>
 			</div>
 		{:else if row._type === 'spacer'}
 			<div style:flex-grow={row.weight}></div>

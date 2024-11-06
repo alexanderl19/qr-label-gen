@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { customAlphabet } from 'nanoid';
 	import type { ItemsType } from './Config.svelte';
 	import Row from './Rows.svelte';
 
@@ -7,9 +8,10 @@
 		columns: ItemsType;
 		qrSize: number;
 		baseUrl: string;
+		codes?: string[];
 	}
 
-	let { rows, columns, qrSize, baseUrl }: Props = $props();
+	let { rows, columns, qrSize, baseUrl, codes: bindableCodes = $bindable() }: Props = $props();
 
 	const itemsToQrMap = (items: ItemsType) =>
 		Object.fromEntries(
@@ -42,6 +44,24 @@
 
 	const qrRowMap = $derived(itemsToQrMap(rows));
 	const qrColumnMap = $derived(itemsToQrMap(columns));
+	const qrRowCount = $derived(Math.max(...Object.values(qrRowMap)) + 1);
+	const qrColumnCount = $derived(Math.max(...Object.values(qrColumnMap)) + 1);
+	const qrCount = $derived(qrRowCount * qrColumnCount);
+
+	$inspect(qrRowCount, qrColumnCount, qrCount);
+
+	const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 10);
+
+	const codes = $derived(
+		Array(qrCount)
+			.fill(undefined)
+			.map(() => nanoid())
+	);
+	$inspect(codes);
+
+	$effect(() => {
+		bindableCodes = codes;
+	});
 
 	$inspect(qrRowMap);
 	$inspect(qrColumnMap);
@@ -57,6 +77,8 @@
 		{baseUrl}
 		qrRows={qrRowMap}
 		qrColumns={qrColumnMap}
+		ids={codes}
+		width={qrColumnCount}
 	/>
 </div>
 
