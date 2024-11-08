@@ -9,9 +9,17 @@
 		qrSize: number;
 		baseUrl: string;
 		codes?: string[];
+		margin: number;
 	}
 
-	let { rows, columns, qrSize, baseUrl, codes: bindableCodes = $bindable() }: Props = $props();
+	let {
+		rows,
+		columns,
+		qrSize,
+		baseUrl,
+		codes: bindableCodes = $bindable(),
+		margin
+	}: Props = $props();
 
 	const itemsToQrMap = (items: ItemsType) =>
 		Object.fromEntries(
@@ -79,6 +87,7 @@
 		qrColumns={qrColumnMap}
 		ids={codes}
 		width={qrColumnCount}
+		{margin}
 	/>
 </div>
 

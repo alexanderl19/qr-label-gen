@@ -12,9 +12,11 @@
 		qrColumns: Record<string, number>;
 		ids: string[];
 		width: number;
+		margin: number;
 	}
 
-	let { columns, qrSize, parentWidth, baseUrl, rowNumber, qrColumns, ids, width }: Props = $props();
+	let { columns, qrSize, parentWidth, baseUrl, rowNumber, qrColumns, ids, width, margin }: Props =
+		$props();
 </script>
 
 <div class="cols">
@@ -30,6 +32,7 @@
 					{qrColumns}
 					{ids}
 					{width}
+					{margin}
 				/>
 			</div>
 		{:else if column._type === 'qr'}
@@ -41,6 +44,7 @@
 				{rowNumber}
 				{columnNumber}
 				code={ids[rowNumber * width + columnNumber]}
+				{margin}
 			/>
 		{:else if column._type === 'spacer'}
 			<div style:flex-grow={column.weight}></div>

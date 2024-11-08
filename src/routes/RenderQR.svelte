@@ -12,9 +12,10 @@
 		rowNumber: number;
 		columnNumber: number;
 		code: string;
+		margin: number;
 	}
 
-	let { qrSize, parentWidth, baseUrl, rowNumber, columnNumber, code }: Props = $props();
+	let { qrSize, parentWidth, baseUrl, rowNumber, columnNumber, code, margin }: Props = $props();
 
 	const svg = $derived.by(() => {
 		const qr = qrcode(0, 'Q');
@@ -23,7 +24,7 @@
 
 		return qr.createSvgTag({
 			cellSize: 1,
-			margin: 4,
+			margin,
 			scalable: true
 		});
 	});

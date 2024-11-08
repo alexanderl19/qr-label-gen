@@ -14,6 +14,7 @@
 		qrColumns: Record<string, number>;
 		ids: string[];
 		width: number;
+		margin: number;
 	}
 
 	let {
@@ -26,7 +27,8 @@
 		qrRows,
 		qrColumns,
 		ids,
-		width
+		width,
+		margin
 	}: Props = $props();
 </script>
 
@@ -45,6 +47,7 @@
 					{qrColumns}
 					{ids}
 					{width}
+					{margin}
 				/>
 			</div>
 		{:else if row._type === 'qr'}
@@ -59,6 +62,7 @@
 					{qrColumns}
 					{ids}
 					{width}
+					{margin}
 				/>
 			</div>
 		{:else if row._type === 'spacer'}
