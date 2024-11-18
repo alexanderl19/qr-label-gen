@@ -11,6 +11,7 @@
 		codes?: string[];
 		margin: number;
 		backgroundColor: string;
+		qrColor: string;
 	}
 
 	let {
@@ -20,7 +21,8 @@
 		baseUrl,
 		codes: bindableCodes = $bindable(),
 		margin,
-		backgroundColor
+		backgroundColor,
+		qrColor
 	}: Props = $props();
 
 	const itemsToQrMap = (items: ItemsType) =>
@@ -90,6 +92,7 @@
 		ids={codes}
 		width={qrColumnCount}
 		{margin}
+		{qrColor}
 	/>
 </div>
 

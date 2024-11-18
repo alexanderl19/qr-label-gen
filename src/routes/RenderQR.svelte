@@ -13,9 +13,11 @@
 		columnNumber: number;
 		code: string;
 		margin: number;
+		qrColor: string;
 	}
 
-	let { qrSize, parentWidth, baseUrl, rowNumber, columnNumber, code, margin }: Props = $props();
+	let { qrSize, parentWidth, baseUrl, rowNumber, columnNumber, code, margin, qrColor }: Props =
+		$props();
 
 	const svg = $derived.by(() => {
 		const qr = qrcode(0, 'Q');
@@ -36,6 +38,7 @@
 	data-url="{baseUrl}{code}"
 	data-row={rowNumber}
 	data-column={columnNumber}
+	style:--qr-color={qrColor}
 >
 	{@html svg}
 </div>
@@ -44,6 +47,10 @@
 	.qr :global(svg) {
 		& :global(rect) {
 			display: none;
+		}
+
+		& :global(path) {
+			fill: var(--qr-color, '#000');
 		}
 	}
 </style>

@@ -15,6 +15,7 @@
 		ids: string[];
 		width: number;
 		margin: number;
+		qrColor: string;
 	}
 
 	let {
@@ -28,7 +29,8 @@
 		qrColumns,
 		ids,
 		width,
-		margin
+		margin,
+		qrColor
 	}: Props = $props();
 </script>
 
@@ -48,6 +50,7 @@
 					{ids}
 					{width}
 					{margin}
+					{qrColor}
 				/>
 			</div>
 		{:else if row._type === 'qr'}
@@ -63,6 +66,7 @@
 					{ids}
 					{width}
 					{margin}
+					{qrColor}
 				/>
 			</div>
 		{:else if row._type === 'spacer'}
