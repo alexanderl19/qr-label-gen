@@ -31,6 +31,7 @@
 </script>
 
 <div
+	class="qr"
 	style:width="{(qrSize / parentWidth) * 100}%"
 	data-url="{baseUrl}{code}"
 	data-row={rowNumber}
@@ -38,3 +39,11 @@
 >
 	{@html svg}
 </div>
+
+<style lang="scss">
+	.qr :global(svg) {
+		& :global(rect) {
+			display: none;
+		}
+	}
+</style>

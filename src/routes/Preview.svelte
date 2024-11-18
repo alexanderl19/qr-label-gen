@@ -10,6 +10,7 @@
 		baseUrl: string;
 		codes?: string[];
 		margin: number;
+		backgroundColor: string;
 	}
 
 	let {
@@ -18,7 +19,8 @@
 		qrSize,
 		baseUrl,
 		codes: bindableCodes = $bindable(),
-		margin
+		margin,
+		backgroundColor
 	}: Props = $props();
 
 	const itemsToQrMap = (items: ItemsType) =>
@@ -75,7 +77,7 @@
 	$inspect(qrColumnMap);
 </script>
 
-<div class="page">
+<div class="page" style:background={backgroundColor}>
 	<Row
 		{rows}
 		{columns}
@@ -95,11 +97,11 @@
 	.page {
 		aspect-ratio: 8.5/11;
 		width: 600px;
-		background-color: #fcfcfc;
+		background-color: var(--background, #fcfcfc);
 		overflow: hidden;
 
 		@media print {
-			background-color: transparent;
+			background-color: var(--background, transparent);
 			width: 100%;
 		}
 	}

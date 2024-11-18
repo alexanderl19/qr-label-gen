@@ -42,13 +42,15 @@
 		rows: ssp.lz(defaultState),
 		columns: ssp.lz(defaultState),
 		baseUrl: ssp.string('https://assets.alexanderliu.com/qr/'),
-		margin: ssp.number(4)
+		margin: ssp.number(4),
+		backgroundColor: ssp.string('#ffffff')
 	});
 	let rows = $state<ItemsType>($params.rows);
 	let columns = $state<ItemsType>($params.columns);
 	let qrSize = $state($params.qrSize);
 	let baseUrl = $state($params.baseUrl);
 	let margin = $state($params.margin);
+	let backgroundColor = $state($params.backgroundColor);
 	$effect(() => {
 		$params.rows = $state.snapshot(rows);
 	});
@@ -63,6 +65,9 @@
 	});
 	$effect(() => {
 		$params.margin = $state.snapshot(margin);
+	});
+	$effect(() => {
+		$params.backgroundColor = $state.snapshot(backgroundColor);
 	});
 
 	$inspect(rows);
@@ -96,6 +101,10 @@
 	<label class="paper-size">
 		QR Margin
 		<input type="number" name="qr-size" bind:value={margin} />
+	</label>
+	<label class="paper-size">
+		Background Color
+		<input type="color" name="background-color" bind:value={backgroundColor} />
 	</label>
 	<form class="row-col-selector">
 		<label>
@@ -133,7 +142,7 @@
 	</div>
 </div>
 
-<Preview {rows} {columns} {qrSize} {baseUrl} bind:codes {margin} />
+<Preview {backgroundColor} {rows} {columns} {qrSize} {baseUrl} bind:codes {margin} />
 
 <style lang="scss">
 	.configure {
